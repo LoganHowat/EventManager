@@ -1,5 +1,5 @@
 import '../App.css'
-import { LoginButton, LogoutButton } from '..'
+import { LoginButton } from '..'
 
 
 function LoginPage() {
@@ -8,7 +8,6 @@ function LoginPage() {
     <>
       <h1>Login</h1>
       <LoginButton />
-      <LogoutButton />
     </>
   )
 }
