@@ -1,7 +1,8 @@
 import './App.css'
-import { LoginButton, LogoutButton } from '.'
+import { LoginButton, LogoutButton } from '..'
 
-function App() {
+
+function LoginPage() {
 
   return (
     <>
@@ -12,4 +13,4 @@ function App() {
   )
 }
 
-export default App
+export default LoginPage
