@@ -3,16 +3,15 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 import './project-ui/index.css'
-import { LoginPage } from './project-ui/pages'
+import { LoginPage, LandingPage } from './project-ui/pages'
 
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />}>
-          <Route path="login" element={<LoginPage />} />
-        </Route>
+        <Route path="/" element={<LoginPage />}/>
+        <Route path="login" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );
