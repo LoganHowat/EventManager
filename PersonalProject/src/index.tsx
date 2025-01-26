@@ -4,14 +4,18 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 import './project-ui/index.css'
 import { LoginPage, LandingPage } from './project-ui/pages'
+import { ProtectedRoute } from './project-ui';
 
 
 export default function App() {
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />}/>
-        <Route path="login" element={<LandingPage />} />
+        <Route element={<ProtectedRoute/>}>
+          <Route path="/test" element={<LandingPage/>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
@@ -20,9 +24,9 @@ export default function App() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Auth0Provider
-      domain="dev-ahoke2dpse1ukocx.us.auth0.com"
-      clientId="9Bk8a28KwLkRqfNrJcAs3huFEJC5y5Fy"
-      redirectUri='http://localhost:5173'
+      domain="dev-sf5nk6apumodlmgm.us.auth0.com"
+      clientId="XbmgHfg0Fopy7SRqgd8ALI7AQFOfvItZ"
+      redirectUri="http://localhost:5173/test"
       propmt='none'
     >
       <App />

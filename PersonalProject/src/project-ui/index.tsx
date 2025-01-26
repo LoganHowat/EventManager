@@ -1,7 +1,8 @@
 // Auth
 export {
   LoginButton,
-  LogoutButton
+  LogoutButton,
+  ProtectedRoute
 } from './auth'
 
 // Pages
