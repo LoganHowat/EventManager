@@ -6,9 +6,9 @@ function LoginButton() {
   return (
     <button
       onClick={() =>
-        loginWithRedirect({
-            appState: { returnTo: "/home" },
-        })
+          loginWithRedirect({
+              appState: { returnTo: "/home" },
+          })
       }
     >
       Log In

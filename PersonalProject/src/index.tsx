@@ -9,6 +9,7 @@ import { ProtectedRoute, PublicRoute } from './project-ui';
 
 export default function App() {
 
+
   return (
     <BrowserRouter>
       <Routes>
@@ -32,9 +33,6 @@ createRoot(document.getElementById('root')!).render(
       domain="dev-sf5nk6apumodlmgm.us.auth0.com"
       clientId="XbmgHfg0Fopy7SRqgd8ALI7AQFOfvItZ"
       redirectUri={window.location.origin + "/home"}
-      onRedirectCallback={(appState) => {
-        window.location.replace(appState?.returnTo || "/home");
-      }}
     >
       <App />
     </Auth0Provider>

@@ -8,6 +8,8 @@ const ProtectedRoute = () => {
         return <div>Loading...</div>;
     }
 
+    console.log(isAuthenticated);
+
     // Redirect to login if not authenticated
     if (!isAuthenticated) {
       return <Navigate to="/" replace />;
