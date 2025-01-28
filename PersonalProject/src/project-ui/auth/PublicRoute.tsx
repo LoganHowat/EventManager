@@ -3,14 +3,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 
 const PublicRoute = () => {
-    const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
-    if (isAuthenticated) {
-      console.log('isAuthenticated')
+  // Wait for authentication state to resolve
+  if (isLoading) {
+      return <div>Loading...</div>;
+  }
+
+  // Redirect to /home if the user is authenticated
+  if (isAuthenticated) {
       return <Navigate to="/home" replace />;
-    }
+  }
 
-    return <Outlet />;
-  };
+  // Render public routes if not authenticated
+  return <Outlet />;
+};
 
 export default PublicRoute;

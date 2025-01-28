@@ -1,8 +1,15 @@
+import { LogoutButton } from "..";
+
 
 function LandingPage() {
   
 
-  return <p>You Are Logged In</p>;
+  return (
+    <div>
+    <p>You Are Logged In</p>
+    <LogoutButton/>
+    </div>
+  );
 };
 
 export default LandingPage;

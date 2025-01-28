@@ -31,8 +31,10 @@ createRoot(document.getElementById('root')!).render(
     <Auth0Provider
       domain="dev-sf5nk6apumodlmgm.us.auth0.com"
       clientId="XbmgHfg0Fopy7SRqgd8ALI7AQFOfvItZ"
-      redirectUri="http://localhost:5173/home"
-      propmt='none'
+      redirectUri={window.location.origin + "/home"}
+      onRedirectCallback={(appState) => {
+        window.location.replace(appState?.returnTo || "/home");
+      }}
     >
       <App />
     </Auth0Provider>
