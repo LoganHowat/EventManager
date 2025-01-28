@@ -5,8 +5,8 @@ function LogoutButton() {
 
   const handleLogout = () => {
     logout({
-      returnTo: window.location.origin // Optional: redirect back to the home page after logout
-    });
+      returnTo: '/test', // Redirects to '/'
+    })
   };
 
   return <button onClick={handleLogout}>Log Out</button>;
