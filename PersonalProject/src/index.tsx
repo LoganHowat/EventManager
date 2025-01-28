@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 import './project-ui/index.css'
 import { LoginPage, LandingPage } from './project-ui/pages'
-import { ProtectedRoute } from './project-ui';
+import { ProtectedRoute, PublicRoute } from './project-ui';
 
 
 export default function App() {
@@ -12,9 +12,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />}/>
+        {/* Pages only acessible if not logged in */}
+        <Route element={<PublicRoute/>}>
+          <Route path="/" element={<LoginPage/>}/>
+        </Route>
+
+        {/* Pages only acessible if logged in */}
         <Route element={<ProtectedRoute/>}>
-          <Route path="/test" element={<LandingPage/>} />
+          <Route path="/home" element={<LandingPage/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
@@ -26,7 +31,7 @@ createRoot(document.getElementById('root')!).render(
     <Auth0Provider
       domain="dev-sf5nk6apumodlmgm.us.auth0.com"
       clientId="XbmgHfg0Fopy7SRqgd8ALI7AQFOfvItZ"
-      redirectUri="http://localhost:5173/test"
+      redirectUri="http://localhost:5173/home"
       propmt='none'
     >
       <App />
