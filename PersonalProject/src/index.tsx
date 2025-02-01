@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 import './project-ui/index.css'
 import { LoginPage, LandingPage } from './project-ui/pages'
-import { ProtectedRoute, PublicRoute } from './project-ui';
+import { ProtectedRoute, PublicRoute, Navigation } from './project-ui';
 
 
 export default function App() {
@@ -12,6 +12,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+    <Navigation/>
       <Routes>
         {/* Pages only acessible if not logged in */}
         <Route element={<PublicRoute/>}>

@@ -10,3 +10,8 @@ export {
 export {
   LoginPage
 } from './pages'
+
+//Navigation
+export {
+  Navigation
+} from './navigation'

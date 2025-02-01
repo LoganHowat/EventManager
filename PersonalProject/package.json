@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "npm install",
     "dev": "vite",
-    "prebuild": "npm install",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },
@@ -19,6 +17,7 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
+    "rsuite": "^5.0.0",
     "globals": "^15.14.0",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
