@@ -4,9 +4,7 @@ function LogoutButton() {
   const { logout } = useAuth0();
 
   const handleLogout = () => {
-    logout({
-      returnTo: '/test', // Redirects to '/'
-    })
+    logout({ returnTo: window.location.origin });
   };
 
   return <button onClick={handleLogout}>Log Out</button>;
