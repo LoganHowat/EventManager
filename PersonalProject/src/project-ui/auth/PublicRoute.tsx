@@ -10,8 +10,6 @@ const PublicRoute = () => {
       return <div>Loading...</div>;
   }
 
-  console.log(isAuthenticated);
-
   // Redirect to /home if the user is authenticated
   if (isAuthenticated) {
     return <Navigate to="/home" replace />;

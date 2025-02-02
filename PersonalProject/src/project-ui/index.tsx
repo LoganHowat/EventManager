@@ -6,12 +6,13 @@ export {
   PublicRoute
 } from './auth'
 
-// Pages
-export {
-  LoginPage
-} from './pages'
-
 //Navigation
 export {
   Navigation
 } from './navigation'
+
+// TYPES
+
+export type {
+  Pages
+} from './types/types'

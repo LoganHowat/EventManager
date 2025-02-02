@@ -3,16 +3,29 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 import './project-ui/index.css'
-import { LoginPage, LandingPage } from './project-ui/pages'
+import { LoginPage, LandingPage, TestPage } from './project-ui/pages'
 import { ProtectedRoute, PublicRoute, Navigation } from './project-ui';
 
 
 export default function App() {
 
+  const pages = [
+    {
+      name: "Home",
+      path: "/home",
+      element: <LandingPage/>
+    },
+    {
+      name: "Test",
+      path: "/test",
+      element: <TestPage/>
+    }
+  ]
+
 
   return (
     <BrowserRouter>
-    <Navigation/>
+    <Navigation pages={pages}/>
       <Routes>
         {/* Pages only acessible if not logged in */}
         <Route element={<PublicRoute/>}>
@@ -21,7 +34,9 @@ export default function App() {
 
         {/* Pages only acessible if logged in */}
         <Route element={<ProtectedRoute/>}>
-          <Route path="/home" element={<LandingPage/>}/>
+          {pages.map((page) => {
+            return <Route path={page.path} element={page.element} key={page.name}/>
+          })}
         </Route>
       </Routes>
     </BrowserRouter>
