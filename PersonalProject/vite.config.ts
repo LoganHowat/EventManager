@@ -4,6 +4,13 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "src/project-ui/styling/index.scss";` // Ensure styles are globally available
+      }
+    }
+  },
   server: {
     watch: {
       usePolling: true,

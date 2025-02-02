@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
-import './project-ui/index.css'
+import './project-ui/styling/index.scss'
 import { LoginPage, LandingPage, TestPage } from './project-ui/pages'
 import { ProtectedRoute, PublicRoute, Navigation } from './project-ui';
 

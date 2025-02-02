@@ -1,6 +1,3 @@
-import '../App.css'
-import { LoginButton } from '..'
-
 
 function TestPage() {
 
