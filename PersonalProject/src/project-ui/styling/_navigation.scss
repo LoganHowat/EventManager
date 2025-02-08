@@ -1,6 +1,7 @@
 .sidenav-container {
   display: flex;
   margin: 5%;
+
 }
 
 .sidenav-closed {
@@ -9,12 +10,20 @@
     position: fixed;
     z-index: 1;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: 0.2s;
   }
   
 .sidenav-open {
   @extend .sidenav-closed;
   width: 100%;
   background-color: grey;
-  padding: 5%;
+  padding-top: 5%;
+}
+
+.sidenav-close-button {
+  padding-left: 5%;
+}
+
+.sidenav-links {
+  padding-top: 5%;
 }

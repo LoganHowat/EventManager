@@ -15,7 +15,6 @@ function Navigation(props: Props) {
     <div className='sidenav-container'>
       <Button 
         onClick={() => setExpanded(!expanded)}
-        className='sidenav-button'
       >
         Test
       </Button>
@@ -24,12 +23,19 @@ function Navigation(props: Props) {
         appearance='subtle'
       >
       <Sidenav.Body>
-        <Button onClick={() => setExpanded(!expanded)}>Close</Button>
-        <Nav vertical>
-          {pages.map((page) => {
-            return <Nav.Item as={Link} to={page.path} key={page.name}>{page.name}</Nav.Item>
-          })}
-        </Nav>
+        <div className='sidenav-close-button'>
+          <Button onClick={() => setExpanded(!expanded)}>Close</Button>
+        </div>
+        <div className='sidenav-links'>
+          <Nav vertical>
+            {pages.map((page) => {
+              return (
+              <Nav.Item as={Link} to={page.path} key={page.name} onClick={() => setExpanded(!expanded)}>
+                <h3>{page.name}</h3>
+              </Nav.Item>)
+            })}
+          </Nav>
+        </div>
       </Sidenav.Body>
       </Sidenav>
       </div>
