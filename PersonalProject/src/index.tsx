@@ -25,7 +25,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-    <Navigation pages={pages}/>
+    {location.pathname != '/' && <Navigation pages={pages}/>}
       <Routes>
         {/* Pages only acessible if not logged in */}
         <Route element={<PublicRoute/>}>

@@ -12,7 +12,7 @@ function Navigation(props: Props) {
 
   return (
     <Sidenav
-      appearance='subtle'
+      //appearance='subtle'
       expanded={false}
     >
       <Sidenav.Body>
