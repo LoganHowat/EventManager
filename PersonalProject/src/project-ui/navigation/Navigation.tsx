@@ -12,8 +12,13 @@ function Navigation(props: Props) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div>
-      <Button onClick={() => setExpanded(!expanded)}>Test</Button>
+    <div className='sidenav-container'>
+      <Button 
+        onClick={() => setExpanded(!expanded)}
+        className='sidenav-button'
+      >
+        Test
+      </Button>
         <div className={expanded ? 'sidenav-open' : 'sidenav-closed'}>
       <Sidenav
         appearance='subtle'
