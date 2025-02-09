@@ -1,6 +1,6 @@
 import { Sidenav, Nav, Button } from 'rsuite';
 import { Link } from 'react-router-dom';
-import { Pages } from '..';
+import { LogoutButton, Pages } from '..';
 import { useState } from 'react';
 
 interface Props {
@@ -35,6 +35,9 @@ function Navigation(props: Props) {
               </Nav.Item>)
             })}
           </Nav>
+        </div>
+        <div className='sidenav-logout'>
+          <LogoutButton/>
         </div>
       </Sidenav.Body>
       </Sidenav>

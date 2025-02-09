@@ -1,13 +1,10 @@
-import { LogoutButton } from "..";
-
 
 function LandingPage() {
   
 
   return (
     <div>
-    <p>You Are Logged In</p>
-    <LogoutButton/>
+    <p>Hello World</p>
     </div>
   );
 };
