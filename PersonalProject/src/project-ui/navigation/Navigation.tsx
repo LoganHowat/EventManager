@@ -1,4 +1,5 @@
 import { Sidenav, Nav, Button } from 'rsuite';
+import { Menu } from '@rsuite/icons'
 import { Link } from 'react-router-dom';
 import { LogoutButton, Pages } from '..';
 import { useState } from 'react';
@@ -16,7 +17,7 @@ function Navigation(props: Props) {
       <Button 
         onClick={() => setExpanded(!expanded)}
       >
-        Test
+        <Menu/>
       </Button>
         <div className={expanded ? 'sidenav-open' : 'sidenav-closed'}>
       <Sidenav
@@ -24,7 +25,9 @@ function Navigation(props: Props) {
       >
       <Sidenav.Body>
         <div className='sidenav-close-button'>
-          <Button onClick={() => setExpanded(!expanded)}>Close</Button>
+          <Button onClick={() => setExpanded(!expanded)}>
+            <Menu/>
+          </Button>
         </div>
         <div className='sidenav-links'>
           <Nav vertical>
