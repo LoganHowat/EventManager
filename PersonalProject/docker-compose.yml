@@ -22,7 +22,7 @@ services:
     
   api:
     image: python:3.10
-    working_dir: /app
+    working_dir: /app/src/project-api
     volumes:
       - .:/app
     ports:
