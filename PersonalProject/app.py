@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 CORS(app)  # Allow frontend to access the API
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://username:password@localhost:5432/mydatabase")
+DATABASE_URL = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
