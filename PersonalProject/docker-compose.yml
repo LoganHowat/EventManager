@@ -32,4 +32,4 @@ services:
     env_file:
       - .env.dev
     command: >
-      sh -c "pip install -r requirements.txt && python app.py"
+      sh -c "pip install -r requirements.txt && python -m app"
