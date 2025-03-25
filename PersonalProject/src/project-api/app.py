@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_cors import CORS
 import os
-from db import db
-from routes import routes
+from database import db
+from routes import routes_bp
 
 app = Flask(__name__)
 CORS(app)
 
 # Register routes
-app.register_blueprint(routes)
+app.register_blueprint(routes_bp)
 
 # Create tables if they don’t exist
 with app.app_context():
