@@ -1,11 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
-import * as dotenv from 'dotenv';
 
-// Load environment variables from .env file
-dotenv.config()
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
+if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_KEY) {
 	throw new Error('Missing SUPABASE_URL or SUPABASE_KEY in environment variables');
 }
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+
+export const upsertUser = async (userEmail: string,) => {
+	const { data: User } = await supabase
+  .from('User')
+  .upsert({ email: userEmail })
+  .select()
+
+  return User;
+}
