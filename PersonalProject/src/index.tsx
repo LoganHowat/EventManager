@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
 import './project-ui/styling/index.scss'
 import 'rsuite/dist/rsuite.min.css';
-import { LoginPage, LandingPage, TestPage } from './project-ui/pages'
+import { LoginPage, EventsPage, TestPage } from './project-ui/pages'
 import { ProtectedRoute, PublicRoute, Navigation } from './project-ui';
 
 
@@ -14,7 +14,7 @@ export default function App() {
     {
       name: "Home",
       path: "/home",
-      element: <LandingPage/>
+      element: <EventsPage/>
     },
     {
       name: "Test",

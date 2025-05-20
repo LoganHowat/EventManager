@@ -1,3 +1,3 @@
 export {default as LoginPage} from './LoginPage'
-export {default as LandingPage} from './LandingPage'
+export {default as EventsPage} from './EventsPage'
 export {default as TestPage} from './TestPage'

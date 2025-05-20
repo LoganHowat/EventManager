@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
-function LandingPage() {
+function EventsPage() {
   const { user } = useAuth0();
   const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
@@ -12,4 +12,4 @@ function LandingPage() {
   );
 };
 
-export default LandingPage;
+export default EventsPage;

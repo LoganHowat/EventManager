@@ -7,10 +7,10 @@ if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_KEY) {
 
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
 
-export const upsertUser = async (userEmail: string,) => {
+export const upsertUser = async (username: string,) => {
 	const { data: User } = await supabase
   .from('User')
-  .upsert({ email: userEmail })
+  .upsert({ username: username })
   .select()
 
   return User;
