@@ -19,8 +19,7 @@ function EventsPage() {
   const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
   return (
-    <div>
-      <p>Hello World</p>
+    <div className='page-center'>
       <p>{user?.[`${claimUrl}/username`]}</p>
       <Button onClick={async() => {await addEvent(token)}}>
         Test
