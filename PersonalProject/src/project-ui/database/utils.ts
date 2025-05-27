@@ -1,17 +1,35 @@
 import { createClient } from '@supabase/supabase-js';
 
+const setupSupabase = async (token: any) => {;
 
-if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_KEY) {
-	throw new Error('Missing SUPABASE_URL or SUPABASE_KEY in environment variables');
-}
+  const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_KEY,
+    {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    }
+  );
 
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+  return supabase;
+};
 
-export const upsertUser = async (username: string,) => {
-	const { data: User } = await supabase
-  .from('User')
-  .upsert({ username: username })
-  .select()
+// Usage example
+export const addEvent = async (token: any) => {
+  const supabase = await setupSupabase(token);
 
-  return User;
-}
+  const { data: Event, error } = await supabase
+    .from('Events')
+    .upsert({
+      title: 'Test Event',
+      description: 'This is a test event',
+      host: 'Test Host',
+    })
+    .select();
+
+  if (error) console.error(error);
+  console.log(Event);
+};
