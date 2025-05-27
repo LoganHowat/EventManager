@@ -17,10 +17,10 @@ const setupSupabase = async (token: any) => {;
   return supabase;
 };
 
-// Usage example
 export const addEvent = async (token: any) => {
   const supabase = await setupSupabase(token);
 
+  // Insert a new event into the Events table
   const { data: Event, error } = await supabase
     .from('Events')
     .upsert({
@@ -29,7 +29,15 @@ export const addEvent = async (token: any) => {
       host: 'Test Host',
     })
     .select();
-
+  
   if (error) console.error(error);
-  console.log(Event);
+
+  // Update the joining table with the event ID and user
+  await supabase
+    .from('EventsUser')
+    .upsert({
+      event_id: Event![0].id,
+      user: 'Test User',
+    })
+    .select();
 };
