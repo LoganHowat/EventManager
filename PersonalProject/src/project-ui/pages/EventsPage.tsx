@@ -1,35 +1,39 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "rsuite";
-import { addEvent, getEvents } from "../database/utils";
+import { Button, Panel } from "rsuite";
+import { getEvents } from "../database/utils";
 import { useEffect, useState } from "react";
+import { AddEventModal } from "../components";
 
 function EventsPage() {
   const { user, getIdTokenClaims } = useAuth0();
-  const [token, setToken] = useState<any>(null);
+  const [token, setToken] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
+  const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
   const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
   useEffect(() => {
-    const fetchToken = async () => {
-      const claims = await getIdTokenClaims();
-      setToken(claims?.__raw);
-    };
-
     const getEventsData = async () => {
       setLoading(true);
       try {
-        const events = await getEvents(token);
-        setEvents(events || []);
+        const claims = await getIdTokenClaims();
+        const fetchedToken = claims?.__raw;
+        setToken(fetchedToken);
+        console.log(fetchedToken)
+
+        if (fetchedToken) {
+          const events = await getEvents(fetchedToken);
+          setEvents(events || []);
+        }
+
       } catch (error) {
         console.error("Error fetching events:", error);
+        setLoading(false);
       }
       setLoading(false);
     }
 
     getEventsData();
-    fetchToken();
-
   }, [])
 
   if (loading || !token) {
@@ -42,15 +46,24 @@ function EventsPage() {
     return (
       <div className='page-center'>
         <p>{user?.[`${claimUrl}/username`]}</p>
+        <AddEventModal
+          open={openAddEventModal}
+          onClose={() => setOpenAddEventModal(false)}
+          token={token}
+        />
         {events.map((event, index) => (
-          <div key={index}>
-            <h2>{event.title}</h2>
-            <p>{event.description}</p>
-            <p>Host: {event.host}</p>
+          <div key={index} className='event-card'>
+            <Panel
+              bordered
+            >
+              <h2>{event.title}</h2>
+              <p>{event.description}</p>
+              <p>Host: {event.host}</p>
+            </Panel>
           </div>
         ))}
-        <Button onClick={async() => {await addEvent(token)}}>
-          Test
+        <Button onClick={() => setOpenAddEventModal(true)}>
+          Create Event
         </Button>
       </div>
     );
