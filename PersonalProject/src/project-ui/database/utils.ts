@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
 const setupSupabase = async (token: any) => {;
 
@@ -17,16 +18,21 @@ const setupSupabase = async (token: any) => {;
   return supabase;
 };
 
-export const addEvent = async (token: any) => {
+export const addEvent = async (
+  token: any,
+  title: string,
+  description: string,
+  user?: any,
+) => {
   const supabase = await setupSupabase(token);
 
   // Insert a new event into the Events table
   const { data: Event, error } = await supabase
     .from('Events')
     .upsert({
-      title: 'Test Event',
-      description: 'This is a test event',
-      host: 'Test Host',
+      title: title,
+      description: description,
+      host: user?.[`${claimUrl}/username`],
     })
     .select();
   
@@ -37,7 +43,8 @@ export const addEvent = async (token: any) => {
     .from('EventsUser')
     .upsert({
       event_id: Event![0].id,
-      user: 'Test User',
+      username: user?.[`${claimUrl}/username`],
+      user_id: user?.sub
     })
     .select();
 };

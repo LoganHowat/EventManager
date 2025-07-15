@@ -10,7 +10,6 @@ function EventsPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
   const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
-  const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
   useEffect(() => {
     const getEventsData = async () => {
@@ -19,7 +18,6 @@ function EventsPage() {
         const claims = await getIdTokenClaims();
         const fetchedToken = claims?.__raw;
         setToken(fetchedToken);
-        console.log(fetchedToken)
 
         if (fetchedToken) {
           const events = await getEvents(fetchedToken);
@@ -45,11 +43,11 @@ function EventsPage() {
   } else {
     return (
       <div className='page-center'>
-        <p>{user?.[`${claimUrl}/username`]}</p>
         <AddEventModal
           open={openAddEventModal}
           onClose={() => setOpenAddEventModal(false)}
           token={token}
+          user={user}
         />
         {events.map((event, index) => (
           <div key={index} className='event-card'>

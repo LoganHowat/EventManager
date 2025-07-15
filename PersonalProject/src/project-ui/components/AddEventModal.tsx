@@ -1,4 +1,4 @@
-import { Modal } from 'rsuite';
+import { Button, Modal, Input } from 'rsuite';
 import { useState } from "react";
 import { addEvent } from '../database/utils';
 
@@ -6,54 +6,41 @@ import { addEvent } from '../database/utils';
 interface props {
     open: boolean,
     onClose: any,
-    token: string
+    token: string,
+    user?: any
 }
 
 function AddEventModal(props: props) {
-  const { open, onClose, token } = props;
+  const { open, onClose, token, user } = props;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [host, setHost] = useState('');
 
   const handleSubmit = () => {
-    addEvent(token)
+    addEvent(token, title, description, user)
+    onClose();
   };
 
   return (
     <Modal open={open} onClose={onClose}>
       <Modal.Header>
-        <Modal.Title>Add Event</Modal.Title>
+        <h3>Add Event</h3>
       </Modal.Header>
       <Modal.Body>
         <form>
           <div>
-            <label>Title:</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            <h5>Title:</h5>
+            <Input onChange={(e) => setTitle(e)}/>
           </div>
           <div>
-            <label>Description:</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>Host:</label>
-            <input
-              type="text"
-              value={host}
-              onChange={(e) => setHost(e.target.value)}
-            />
+            <h5>Description:</h5>
+            <Input as='textarea' value={description} onChange={(e) => setDescription(e)} />
           </div>
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={onClose}>Cancel</button>
+        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={onClose} title='Cancel' >Cancel</Button>
       </Modal.Footer>
     </Modal>
   );
