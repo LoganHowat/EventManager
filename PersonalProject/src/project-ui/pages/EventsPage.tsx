@@ -20,7 +20,7 @@ function EventsPage() {
         setToken(fetchedToken);
 
         if (fetchedToken) {
-          const events = await getEvents(fetchedToken);
+          const events = await getEvents(fetchedToken, user);
           setEvents(events || []);
         }
 
@@ -55,8 +55,10 @@ function EventsPage() {
               bordered
             >
               <h2>{event.title}</h2>
+              <h5>Description</h5>
               <p>{event.description}</p>
-              <p>Host: {event.host}</p>
+              <h5>Created By:</h5>
+              <p>{event.host}</p>
             </Panel>
           </div>
         ))}

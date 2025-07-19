@@ -49,12 +49,12 @@ export const addEvent = async (
     .select();
 };
 
-export const getEvents = async (token: any) => {
+export const getEvents = async (token: any, user?: any) => {
   const supabase = await setupSupabase(token);
   // Fetch all events from the Events table
   const { data: events, error } = await supabase
     .from('Events')
-    .select('*');
+    .select(`WHERE host IS NOT ${user?.[`${claimUrl}/username`]}`);
 
   if (error) console.error(error);
 
