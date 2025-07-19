@@ -1,3 +1,4 @@
+
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button, Panel } from "rsuite";
 import { getEvents } from "../database/utils";
@@ -5,13 +6,14 @@ import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../database/TokenContext";
 import { AddEventModal } from "../components";
 
-function EventsPage() {
+function MyEventsPage() {
+
   const { user } = useAuth0();
+  // const [token, setToken] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
   const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
   const token = useContext(TokenContext);
-  
 
   useEffect(() => {
     const getEventsData = async () => {
@@ -64,6 +66,6 @@ function EventsPage() {
       </div>
     );
   }
-};
+}
 
-export default EventsPage;
+export default MyEventsPage

@@ -54,7 +54,8 @@ export const getEvents = async (token: any, user?: any) => {
   // Fetch all events from the Events table
   const { data: events, error } = await supabase
     .from('Events')
-    .select(`WHERE host IS NOT ${user?.[`${claimUrl}/username`]}`);
+    .select('*') // Specify columns to retrieve
+    .not('host', 'eq', user?.[`${claimUrl}/username`]); // Filter rows;
 
   if (error) console.error(error);
 

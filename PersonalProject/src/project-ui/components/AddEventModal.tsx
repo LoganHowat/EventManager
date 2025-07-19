@@ -14,7 +14,6 @@ function AddEventModal(props: props) {
   const { open, onClose, token, user } = props;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [host, setHost] = useState('');
 
   const handleSubmit = () => {
     addEvent(token, title, description, user)
