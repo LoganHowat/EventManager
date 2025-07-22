@@ -49,15 +49,23 @@ export const addEvent = async (
     .select();
 };
 
-export const getEvents = async (token: any, user?: any) => {
+export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean = false) => {
   const supabase = await setupSupabase(token);
   // Fetch all events from the Events table
-  const { data: events, error } = await supabase
+  if (userOnlyEvents) {
+    var { data: events, error } = await supabase
     .from('Events')
     .select('*') // Specify columns to retrieve
-    .not('host', 'eq', user?.[`${claimUrl}/username`]); // Filter rows;
+    .eq('host', user?.[`${claimUrl}/username`]); // Filter rows;
+
+  } else {
+    var { data: events, error } = await supabase
+      .from('Events')
+      .select('*') // Specify columns to retrieve
+      .not('host', 'eq', user?.[`${claimUrl}/username`]) // Filter rows
+      .order('created_at', { ascending: false }); // Order by created_at in descending order
+  }
 
   if (error) console.error(error);
-
   return events;
 };

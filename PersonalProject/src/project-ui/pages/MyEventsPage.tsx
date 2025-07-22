@@ -9,9 +9,10 @@ import { AddEventModal } from "../components";
 function MyEventsPage() {
 
   const { user } = useAuth0();
-  // const [token, setToken] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
+  // This state is used to store the details of the event being edited
+  const [eventDetails, setEventDetails] = useState<object | undefined>(undefined);
   const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
   const token = useContext(TokenContext);
 
@@ -20,7 +21,7 @@ function MyEventsPage() {
       if (!token) return;
       setLoading(true);
       try {
-        const events = await getEvents(token, user);
+        const events = await getEvents(token, user, true);
         setEvents(events || []);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -46,6 +47,7 @@ function MyEventsPage() {
           onClose={() => setOpenAddEventModal(false)}
           token={token}
           user={user}
+          eventDetails={eventDetails}
         />
         {events.map((event, index) => (
           <div key={index} className='event-card'>
@@ -57,6 +59,17 @@ function MyEventsPage() {
               <p>{event.description}</p>
               <h5>Created By:</h5>
               <p>{event.host}</p>
+              <br/>
+              <Button onClick={() => {
+                setEventDetails({
+                  id: event.id,
+                  title: event.title,
+                  description: event.description,
+                })
+                setOpenAddEventModal(true)
+              }}>
+                Edit
+              </Button>
             </Panel>
           </div>
         ))}

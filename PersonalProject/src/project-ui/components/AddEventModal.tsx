@@ -8,10 +8,11 @@ interface props {
     onClose: any,
     token: string,
     user?: any
+    eventDetails?: object
 }
 
 function AddEventModal(props: props) {
-  const { open, onClose, token, user } = props;
+  const { open, onClose, token, user, eventDetails } = props;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -29,8 +30,9 @@ function AddEventModal(props: props) {
         <form>
           <div>
             <h5>Title:</h5>
-            <Input onChange={(e) => setTitle(e)}/>
+            <Input value={eventDetails?.title} onChange={(e) => setTitle(e)}/>
           </div>
+          <br/>
           <div>
             <h5>Description:</h5>
             <Input as='textarea' value={description} onChange={(e) => setDescription(e)} />
