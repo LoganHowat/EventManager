@@ -5,6 +5,7 @@ import { getEvents } from "../database/utils";
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../database/TokenContext";
 import { AddEventModal } from "../components";
+import { EventDetails } from "../interfaces/Events";
 
 function MyEventsPage() {
 
@@ -12,7 +13,7 @@ function MyEventsPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
   // This state is used to store the details of the event being edited
-  const [eventDetails, setEventDetails] = useState<object | undefined>(undefined);
+  const [eventDetails, setEventDetails] = useState<EventDetails | undefined>(undefined);
   const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
   const token = useContext(TokenContext);
 
@@ -32,6 +33,7 @@ function MyEventsPage() {
 
     getEventsData();
   }, [])
+  
 
   if (loading || !token) {
     return (

@@ -1,6 +1,7 @@
 import { Button, Modal, Input } from 'rsuite';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addEvent } from '../database/utils';
+import { EventDetails } from '../interfaces/Events';
 
 
 interface props {
@@ -8,13 +9,25 @@ interface props {
     onClose: any,
     token: string,
     user?: any
-    eventDetails?: object
+    eventDetails?: EventDetails
 }
 
 function AddEventModal(props: props) {
   const { open, onClose, token, user, eventDetails } = props;
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState(eventDetails?.title || '');
+  console.log(eventDetails?.title);
+  console.log(title)
+  const [description, setDescription] = useState(eventDetails?.description || '');
+
+  useEffect(() => {
+    if (eventDetails) {
+      setTitle(eventDetails.title || '');
+      setDescription(eventDetails.description || '');
+    } else {
+      setTitle('');
+      setDescription('');
+    }
+  }, [eventDetails]);
 
   const handleSubmit = () => {
     addEvent(token, title, description, user)
@@ -30,7 +43,7 @@ function AddEventModal(props: props) {
         <form>
           <div>
             <h5>Title:</h5>
-            <Input value={eventDetails?.title} onChange={(e) => setTitle(e)}/>
+            <Input value={title} onChange={(e) => setTitle(e)}/>
           </div>
           <br/>
           <div>

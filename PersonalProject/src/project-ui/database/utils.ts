@@ -18,6 +18,27 @@ const setupSupabase = async (token: any) => {;
   return supabase;
 };
 
+export const EditEvent = async (
+  token: any,
+  eventId: string,
+  title: string,
+  description: string,
+  user?: any,
+) => {
+  const supabase = await setupSupabase(token);
+  // Update the event in the Events table
+  const { data: Event, error } = await supabase
+    .from('Events')
+    .update({
+      title: title,
+      description: description,
+    })
+    .eq('id', eventId)
+    .eq('host', user?.[`${claimUrl}/username`])
+    .select();
+  if (error) console.error(error);
+}
+
 export const addEvent = async (
   token: any,
   title: string,
