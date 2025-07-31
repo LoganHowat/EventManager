@@ -8,12 +8,13 @@ interface props {
     open: boolean,
     onClose: any,
     token: string,
+    handleEventUpdate: (id: string, title: string, description: string) => void,
     user?: any
     eventDetails?: EventDetails
 }
 
 function AddEventModal(props: props) {
-  const { open, onClose, token, user, eventDetails } = props;
+  const { open, onClose, token, user, eventDetails, handleEventUpdate } = props;
   const [title, setTitle] = useState(eventDetails?.title || '');
   const [description, setDescription] = useState(eventDetails?.description || '');
 
@@ -29,6 +30,9 @@ function AddEventModal(props: props) {
 
   const handleSubmit = () => {
     upsertEvent(token, title, description, user, eventDetails?.id);
+    if (eventDetails?.id) {
+      handleEventUpdate(eventDetails.id, title, description);
+    }
     onClose();
   };
 

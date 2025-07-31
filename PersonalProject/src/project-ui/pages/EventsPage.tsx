@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button, Panel } from "rsuite";
+import { Panel } from "rsuite";
 import { getEvents } from "../database/utils";
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../database/TokenContext";
@@ -26,7 +26,6 @@ function EventsPage() {
       }
       setLoading(false);
     }
-
     getEventsData();
   }, [])
 
@@ -58,9 +57,6 @@ function EventsPage() {
             </Panel>
           </div>
         ))}
-        <Button onClick={() => setOpenAddEventModal(true)}>
-          Create Event
-        </Button>
       </div>
     );
   }
