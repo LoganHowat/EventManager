@@ -1,6 +1,6 @@
 import { Button, Modal, Input } from 'rsuite';
 import { useState, useEffect } from "react";
-import { addEvent } from '../database/utils';
+import { upsertEvent } from '../database/utils';
 import { EventDetails } from '../interfaces/Events';
 
 
@@ -15,8 +15,6 @@ interface props {
 function AddEventModal(props: props) {
   const { open, onClose, token, user, eventDetails } = props;
   const [title, setTitle] = useState(eventDetails?.title || '');
-  console.log(eventDetails?.title);
-  console.log(title)
   const [description, setDescription] = useState(eventDetails?.description || '');
 
   useEffect(() => {
@@ -30,7 +28,7 @@ function AddEventModal(props: props) {
   }, [eventDetails]);
 
   const handleSubmit = () => {
-    addEvent(token, title, description, user)
+    upsertEvent(token, title, description, user, eventDetails?.id);
     onClose();
   };
 

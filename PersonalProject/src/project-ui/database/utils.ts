@@ -18,39 +18,20 @@ const setupSupabase = async (token: any) => {;
   return supabase;
 };
 
-export const EditEvent = async (
-  token: any,
-  eventId: string,
-  title: string,
-  description: string,
-  user?: any,
-) => {
-  const supabase = await setupSupabase(token);
-  // Update the event in the Events table
-  const { data: Event, error } = await supabase
-    .from('Events')
-    .update({
-      title: title,
-      description: description,
-    })
-    .eq('id', eventId)
-    .eq('host', user?.[`${claimUrl}/username`])
-    .select();
-  if (error) console.error(error);
-}
-
-export const addEvent = async (
+export const upsertEvent = async (
   token: any,
   title: string,
   description: string,
   user?: any,
+  eventId?: string,
 ) => {
   const supabase = await setupSupabase(token);
 
-  // Insert a new event into the Events table
+  // Upsert event into the Events table
   const { data: Event, error } = await supabase
     .from('Events')
     .upsert({
+      id: eventId,
       title: title,
       description: description,
       host: user?.[`${claimUrl}/username`],
@@ -59,16 +40,18 @@ export const addEvent = async (
   
   if (error) console.error(error);
 
-  // Update the joining table with the event ID and user
-  await supabase
+  if (!eventId) {
+    // Update the joining table with the event ID and user if the event is new
+    await supabase
     .from('EventsUser')
     .upsert({
       event_id: Event![0].id,
       username: user?.[`${claimUrl}/username`],
       user_id: user?.sub
     })
-    .select();
-};
+  }
+
+}
 
 export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean = false) => {
   const supabase = await setupSupabase(token);
