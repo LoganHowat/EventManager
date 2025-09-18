@@ -32,6 +32,8 @@ function AddEventModal(props: props) {
     upsertEvent(token, title, description, user, eventDetails?.id);
     if (eventDetails?.id) {
       handleEventUpdate(eventDetails.id, title, description);
+    } else {
+      // Optionally, you can handle adding the new event to the local state here if needed
     }
     onClose();
   };

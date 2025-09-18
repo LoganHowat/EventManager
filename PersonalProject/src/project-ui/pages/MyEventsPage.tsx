@@ -16,7 +16,6 @@ function MyEventsPage() {
   const [eventDetails, setEventDetails] = useState<EventDetails | undefined>(undefined);
   const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
   const token = useContext(TokenContext);
-  console.log(events)
 
   useEffect(() => {
     const getEventsData = async () => {
@@ -35,16 +34,17 @@ function MyEventsPage() {
     getEventsData();
   }, [token, user]);
   
-  // Function to update an event in the local state
+  // Function to update an event in the local state, this means the update appears immediately in the UI
   const updateEventInState = (id: string, title: string, description: string) => {
-    setEvents(prevEvents => 
-      prevEvents.map(event => 
+    const updatedEvent = { 'title': title, 'description': description };
+    setEvents(prevEvents =>
+      prevEvents.map(event =>
         event.id === id ? { ...event, ...updatedEvent } : event
       )
     );
   };
 
-  // Function to add a new event to the local state
+  // Function to add a new event to the local state, similar to the update function
   const addEventToState = (newEvent: any) => {
     setEvents(prevEvents => [...prevEvents, newEvent]);
   };
