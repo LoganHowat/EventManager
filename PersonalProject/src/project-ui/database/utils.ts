@@ -51,6 +51,10 @@ export const upsertEvent = async (
     })
   }
 
+  // Return ID on new event creation
+  return(Event![0]);
+
+
 }
 
 export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean = false) => {

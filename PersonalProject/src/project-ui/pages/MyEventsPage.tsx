@@ -30,24 +30,8 @@ function MyEventsPage() {
       }
       setLoading(false);
     }
-
     getEventsData();
   }, [token, user]);
-  
-  // Function to update an event in the local state, this means the update appears immediately in the UI
-  const updateEventInState = (id: string, title: string, description: string) => {
-    const updatedEvent = { 'title': title, 'description': description };
-    setEvents(prevEvents =>
-      prevEvents.map(event =>
-        event.id === id ? { ...event, ...updatedEvent } : event
-      )
-    );
-  };
-
-  // Function to add a new event to the local state, similar to the update function
-  const addEventToState = (newEvent: any) => {
-    setEvents(prevEvents => [...prevEvents, newEvent]);
-  };
 
   if (loading || !token) {
     return (
@@ -64,7 +48,7 @@ function MyEventsPage() {
           token={token}
           user={user}
           eventDetails={eventDetails}
-          handleEventUpdate={updateEventInState}
+          setEvents={setEvents}
         />
         {events.map((event, index) => (
           <div key={index} className='event-card'>

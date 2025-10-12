@@ -8,13 +8,13 @@ interface props {
     open: boolean,
     onClose: any,
     token: string,
-    handleEventUpdate: (id: string, title: string, description: string) => void,
+    setEvents: (event: any) => void,
     user?: any
     eventDetails?: EventDetails
 }
 
 function AddEventModal(props: props) {
-  const { open, onClose, token, user, eventDetails, handleEventUpdate } = props;
+  const { open, onClose, token, user, eventDetails, setEvents } = props;
   const [title, setTitle] = useState(eventDetails?.title || '');
   const [description, setDescription] = useState(eventDetails?.description || '');
 
@@ -28,12 +28,19 @@ function AddEventModal(props: props) {
     }
   }, [eventDetails]);
 
-  const handleSubmit = () => {
-    upsertEvent(token, title, description, user, eventDetails?.id);
+  const handleSubmit = async() => {
+    const newEvent = await upsertEvent(token, title, description, user, eventDetails?.id);
     if (eventDetails?.id) {
-      handleEventUpdate(eventDetails.id, title, description);
+      const updatedEvent = { 'title': title, 'description': description };
+      setEvents(prevEvents =>
+        prevEvents.map(event =>
+          event.id === eventDetails.id ? { ...event, ...updatedEvent } : event
+        )
+      );
     } else {
+      console.log(newEvent);
       // Optionally, you can handle adding the new event to the local state here if needed
+      setEvents((prevEvents: any) => [...prevEvents, newEvent] );
     }
     onClose();
   };
