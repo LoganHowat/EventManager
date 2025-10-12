@@ -77,3 +77,21 @@ export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean 
   if (error) console.error(error);
   return events;
 };
+
+export const deleteEvent = async (token: any, eventId: string) => {
+  const supabase = await setupSupabase(token);
+  console.log(eventId)
+
+  const { data: joinData, error: joinError } = await supabase
+    .from('EventsUser')
+    .delete()
+    .eq('event_id', eventId);
+
+  // Delete event from the Events table
+  const { data: eventData, error: eventError } = await supabase
+    .from('Events')
+    .delete()
+    .eq('id', eventId);
+  
+  if (joinError || eventError) console.error(joinError || eventError);
+}

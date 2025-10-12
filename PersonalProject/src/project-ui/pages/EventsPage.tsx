@@ -3,13 +3,11 @@ import { Panel } from "rsuite";
 import { getEvents } from "../database/utils";
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../database/TokenContext";
-import { AddEventModal } from "../components";
 
 function EventsPage() {
   const { user } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
-  const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
   const token = useContext(TokenContext);
   
 
@@ -38,12 +36,6 @@ function EventsPage() {
   } else {
     return (
       <div className='page-center'>
-        <AddEventModal
-          open={openAddEventModal}
-          onClose={() => setOpenAddEventModal(false)}
-          token={token}
-          user={user}
-        />
         {events.map((event, index) => (
           <div key={index} className='event-card'>
             <Panel

@@ -1,7 +1,7 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button, Panel } from "rsuite";
-import { getEvents } from "../database/utils";
+import { getEvents, deleteEvent } from "../database/utils";
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../database/TokenContext";
 import { AddEventModal } from "../components";
@@ -70,6 +70,12 @@ function MyEventsPage() {
                 setOpenAddEventModal(true)
               }}>
                 Edit
+              </Button>
+              <Button onClick={async() => {
+                await deleteEvent(token, event.id);
+                setEvents(events.filter(e => e.id !== event.id));
+              }}>
+                Delete
               </Button>
             </Panel>
           </div>

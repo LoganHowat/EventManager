@@ -32,7 +32,7 @@ function AddEventModal(props: props) {
     const newEvent = await upsertEvent(token, title, description, user, eventDetails?.id);
     if (eventDetails?.id) {
       const updatedEvent = { 'title': title, 'description': description };
-      setEvents(prevEvents =>
+      setEvents((prevEvents: EventDetails[]) =>
         prevEvents.map(event =>
           event.id === eventDetails.id ? { ...event, ...updatedEvent } : event
         )
