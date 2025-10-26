@@ -1,11 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Panel, Button } from "rsuite";
 import { useEffect, useState, useContext } from "react";
-import { getEvents, addUserToEvent } from "../database/utils";
+import { getEvents, joinOrLeaveEvent } from "../database/utils";
 import { TokenContext } from "../database/TokenContext";
 
 function EventsPage() {
   const { user } = useAuth0();
+  const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
   const token = useContext(TokenContext);
@@ -25,7 +26,7 @@ function EventsPage() {
       setLoading(false);
     }
     getEventsData();
-  }, [])
+  }, [token, user])
 
   if (loading || !token) {
     return (
@@ -56,10 +57,30 @@ function EventsPage() {
                 }
               })}
               <Button onClick={async () => {
-                await addUserToEvent(token, event.id, user);
-                setEvents(events.filter(e => e.id !== event.id));
+                const joined = event.attendees.includes(user?.[`${claimUrl}/username`]);
+                await joinOrLeaveEvent(token, event.id, joined, user);
+                // Handles local state update for attendees without refetching
+                const eventsChanged = events.map(e => {
+                  if (e.id === event.id) {
+                    if (joined) {
+                      return {
+                        ...e,
+                        // Remove user from attendees array
+                        attendees: e.attendees.filter((a: string) => a !== user?.[`${claimUrl}/username`])
+                      };
+                    } else {
+                      return {
+                        ...e,
+                        // Add user to attendees array
+                        attendees: [...e.attendees, user?.[`${claimUrl}/username`]]
+                      };
+                    }
+                  }
+                })
+                setEvents(eventsChanged);
               }}>
-                Join Event
+                {event.attendees.includes(user?.[`${claimUrl}/username`]) ? 
+                'Leave Event' : 'Join Event'}
               </Button>
             </Panel>
           </div>

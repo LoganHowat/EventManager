@@ -119,16 +119,25 @@ export const deleteEvent = async (token: any, eventId: string) => {
   if (joinError || eventError) console.error(joinError || eventError);
 }
 
-export const addUserToEvent = async (token: any, eventId: string, user?: any) => {
+export const joinOrLeaveEvent = async (token: any, eventId: string, remove: boolean, user?: any) => {
   const supabase = await setupSupabase(token);
-  // Add user to the EventsUser joining table
-  const { error } = await supabase
-    .from('EventsUser')
-    .upsert({
-      event_id: eventId,
-      username: user?.[`${claimUrl}/username`],
-      user_id: user?.sub
-    });
+  if (!remove) {
+    // Add user to the EventsUser joining table
+    var { error } = await supabase
+      .from('EventsUser')
+      .upsert({
+        event_id: eventId,
+        username: user?.[`${claimUrl}/username`],
+        user_id: user?.sub
+      });
+  } else {
+    // Remove user from the EventsUser joining table
+    var { error } = await supabase
+      .from('EventsUser')
+      .delete()
+      .eq('event_id', eventId)
+      .eq('username', user?.[`${claimUrl}/username`]);
+  }
 
   if (error) console.error(error);
 }
