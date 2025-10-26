@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Panel } from "rsuite";
-import { getEvents } from "../database/utils";
+import { Panel, Button } from "rsuite";
 import { useEffect, useState, useContext } from "react";
+import { getEvents, addUserToEvent } from "../database/utils";
 import { TokenContext } from "../database/TokenContext";
 
 function EventsPage() {
@@ -9,7 +9,7 @@ function EventsPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
   const token = useContext(TokenContext);
-  
+
 
   useEffect(() => {
     const getEventsData = async () => {
@@ -46,6 +46,21 @@ function EventsPage() {
               <p>{event.description}</p>
               <h5>Created By:</h5>
               <p>{event.host}</p>
+              {event.attendees.map((attendee: string, idx: number) => {
+                // Has to be 1 as host is always an attendee
+                if (event.attendees.length === 1) {
+                  return <p key={idx}>No attendees yet</p>
+                }
+                if (attendee !== event.host) {
+                  return <p key={idx}>{attendee}</p>
+                }
+              })}
+              <Button onClick={async () => {
+                await addUserToEvent(token, event.id, user);
+                setEvents(events.filter(e => e.id !== event.id));
+              }}>
+                Join Event
+              </Button>
             </Panel>
           </div>
         ))}

@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
-const setupSupabase = async (token: any) => {;
+const setupSupabase = async (token: any) => {
+  ;
 
   const supabase = createClient(
     import.meta.env.VITE_SUPABASE_URL,
@@ -37,24 +38,43 @@ export const upsertEvent = async (
       host: user?.[`${claimUrl}/username`],
     })
     .select();
-  
+
   if (error) console.error(error);
 
   if (!eventId) {
     // Update the joining table with the event ID and user if the event is new
     await supabase
-    .from('EventsUser')
-    .upsert({
-      event_id: Event![0].id,
-      username: user?.[`${claimUrl}/username`],
-      user_id: user?.sub
-    })
+      .from('EventsUser')
+      .upsert({
+        event_id: Event![0].id,
+        username: user?.[`${claimUrl}/username`],
+        user_id: user?.sub
+      })
   }
 
   // Return ID on new event creation
-  return(Event![0]);
+  return (Event![0]);
+}
 
+// function used to add attendees to events object when fetching events
+const addAtteneesToEvents = async (supabase: any, events: any[]) => {
+  const eventsWithAttendees = await Promise.all(events.map(async (event) => {
+    const { data: attendees, error } = await supabase
+      .from('EventsUser')
+      .select('username')
+      .eq('event_id', event.id);
 
+    if (error) {
+      console.error(error);
+      return event;
+    }
+
+    return {
+      ...event,
+      attendees: attendees?.map((attendee: any) => attendee.username) || []
+    };
+  }))
+  return eventsWithAttendees;
 }
 
 export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean = false) => {
@@ -62,9 +82,9 @@ export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean 
   // Fetch all events from the Events table
   if (userOnlyEvents) {
     var { data: events, error } = await supabase
-    .from('Events')
-    .select('*') // Specify columns to retrieve
-    .eq('host', user?.[`${claimUrl}/username`]); // Filter rows;
+      .from('Events')
+      .select('*') // Specify columns to retrieve
+      .eq('host', user?.[`${claimUrl}/username`]); // Filter rows;
 
   } else {
     var { data: events, error } = await supabase
@@ -75,23 +95,40 @@ export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean 
   }
 
   if (error) console.error(error);
-  return events;
+  if (events) {
+    return addAtteneesToEvents(supabase, events || []);
+  } else {
+    return [];
+  }
 };
 
 export const deleteEvent = async (token: any, eventId: string) => {
   const supabase = await setupSupabase(token);
-  console.log(eventId)
-
-  const { data: joinData, error: joinError } = await supabase
+  // Delete event from the EventsUser joining table
+  const { error: joinError } = await supabase
     .from('EventsUser')
     .delete()
     .eq('event_id', eventId);
 
   // Delete event from the Events table
-  const { data: eventData, error: eventError } = await supabase
+  const { error: eventError } = await supabase
     .from('Events')
     .delete()
     .eq('id', eventId);
-  
+
   if (joinError || eventError) console.error(joinError || eventError);
+}
+
+export const addUserToEvent = async (token: any, eventId: string, user?: any) => {
+  const supabase = await setupSupabase(token);
+  // Add user to the EventsUser joining table
+  const { error } = await supabase
+    .from('EventsUser')
+    .upsert({
+      event_id: eventId,
+      username: user?.[`${claimUrl}/username`],
+      user_id: user?.sub
+    });
+
+  if (error) console.error(error);
 }
