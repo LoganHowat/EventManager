@@ -102,7 +102,12 @@ function AddEventModal(props: props) {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button
+          onClick={handleSubmit}
+          disabled={!title || !description || !date || !time}
+        >
+          Submit
+        </Button>
         <Button onClick={onClose} title='Cancel' >Cancel</Button>
       </Modal.Footer>
     </Modal>
