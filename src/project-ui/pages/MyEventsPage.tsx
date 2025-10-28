@@ -76,6 +76,8 @@ function MyEventsPage() {
                   id: event.id,
                   title: event.title,
                   description: event.description,
+                  date: event.date,
+                  time: event.time
                 })
                 setOpenAddEventModal(true)
               }}>
@@ -90,7 +92,16 @@ function MyEventsPage() {
             </Panel>
           </div>
         ))}
-        <Button onClick={() => setOpenAddEventModal(true)}>
+        <Button onClick={() => {
+          setEventDetails({
+            id: undefined,
+            title: '',
+            description: '',
+            date: '',
+            time: ''
+          })
+          setOpenAddEventModal(true)
+        }}>
           Create Event
         </Button>
       </div>

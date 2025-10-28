@@ -1,46 +1,60 @@
-import { Button, Modal, Input } from 'rsuite';
+import { Button, Modal, Input, DatePicker, TimePicker } from 'rsuite';
 import { useState, useEffect } from "react";
 import { upsertEvent } from '../database/utils';
 import { EventDetails } from '../interfaces/Events';
+import { isBefore, format } from 'date-fns';
 
 
 interface props {
-    open: boolean,
-    onClose: any,
-    token: string,
-    setEvents: (event: any) => void,
-    user?: any
-    eventDetails?: EventDetails
+  open: boolean,
+  onClose: any,
+  token: string,
+  setEvents: (event: any) => void,
+  user?: any
+  eventDetails?: EventDetails
 }
 
 function AddEventModal(props: props) {
   const { open, onClose, token, user, eventDetails, setEvents } = props;
-  const [title, setTitle] = useState(eventDetails?.title || '');
-  const [description, setDescription] = useState(eventDetails?.description || '');
+  const [title, setTitle] = useState<string>(eventDetails?.title || '');
+  const [description, setDescription] = useState<string>(eventDetails?.description || '');
+  const [date, setDate] = useState<string>('');
+  const [time, setTime] = useState<string>('');
 
   useEffect(() => {
     if (eventDetails) {
-      setTitle(eventDetails.title || '');
-      setDescription(eventDetails.description || '');
+      setTitle(eventDetails.title);
+      setDescription(eventDetails.description);
+      setDate(eventDetails.date);
+      setTime(eventDetails.time);
     } else {
       setTitle('');
       setDescription('');
+      setDate('');
+      setTime('');
     }
   }, [eventDetails]);
 
-  const handleSubmit = async() => {
-    const newEvent = await upsertEvent(token, title, description, user, eventDetails?.id);
+  const handleSubmit = async () => {
+    const newEvent = await upsertEvent(
+      token,
+      title,
+      description,
+      date,
+      time,
+      user,
+      eventDetails?.id
+    );
     if (eventDetails?.id) {
-      const updatedEvent = { 'title': title, 'description': description };
+      const updatedEvent = { 'title': title, 'description': description, 'date': date, 'time': time };
       setEvents((prevEvents: EventDetails[]) =>
         prevEvents.map(event =>
           event.id === eventDetails.id ? { ...event, ...updatedEvent } : event
         )
       );
     } else {
-      console.log(newEvent);
       // Optionally, you can handle adding the new event to the local state here if needed
-      setEvents((prevEvents: any) => [...prevEvents, newEvent] );
+      setEvents((prevEvents: any) => [...prevEvents, newEvent]);
     }
     onClose();
   };
@@ -54,12 +68,36 @@ function AddEventModal(props: props) {
         <form>
           <div>
             <h5>Title:</h5>
-            <Input value={title} onChange={(e) => setTitle(e)}/>
+            <Input value={title} onChange={(e) => setTitle(e)} />
           </div>
-          <br/>
           <div>
             <h5>Description:</h5>
             <Input as='textarea' value={description} onChange={(e) => setDescription(e)} />
+          </div>
+          <div>
+            <h5>Date:</h5>
+            <DatePicker
+              format="dd MMM yyyy"
+              placeholder="Select Date"
+              shouldDisableDate={date => isBefore(date, new Date())}
+              block
+              value={date ? new Date(date) : null}
+              onChange={(value) => {
+                value ? setDate(format(value, 'yyyy-MM-dd')) : setDate('');
+              }}
+            />
+          </div>
+          <div>
+            <h5>Time:</h5>
+            <TimePicker
+              placeholder="Select Time"
+              block
+              // Date type expects a full date, so we create a dummy date with the time
+              value={time ? new Date(`1970-01-01T${time}`) : null}
+              onChange={(value) => {
+                value ? setTime(format(value, 'HH:mm:ss')) : setTime('');
+              }}
+            />
           </div>
         </form>
       </Modal.Body>

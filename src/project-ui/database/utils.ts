@@ -23,6 +23,8 @@ export const upsertEvent = async (
   token: any,
   title: string,
   description: string,
+  date: string,
+  time: string,
   user?: any,
   eventId?: string,
 ) => {
@@ -35,6 +37,8 @@ export const upsertEvent = async (
       id: eventId,
       title: title,
       description: description,
+      date: date,
+      time: time,
       host: user?.[`${claimUrl}/username`],
     })
     .select();
