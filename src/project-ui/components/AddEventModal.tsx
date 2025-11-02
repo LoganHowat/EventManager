@@ -54,7 +54,7 @@ function AddEventModal(props: props) {
       );
     } else {
       // Optionally, you can handle adding the new event to the local state here if needed
-      setEvents((prevEvents: any) => [...prevEvents, newEvent]);
+      setEvents((prevEvents: any) => [...(prevEvents || []), newEvent]);
     }
     onClose();
   };
