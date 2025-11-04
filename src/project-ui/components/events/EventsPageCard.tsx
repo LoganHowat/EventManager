@@ -1,5 +1,5 @@
 import { Panel, Button } from 'rsuite';
-import { joinOrLeaveEvent } from "../../";
+import { EventCardDetails, joinOrLeaveEvent } from "../../";
 
 
 interface props {
@@ -21,20 +21,7 @@ function EventsPageCard(props: props) {
             <Panel
               bordered
             >
-              <h2>{event.title}</h2>
-              <h5>Description</h5>
-              <p>{event.description}</p>
-              <h5>Created By:</h5>
-              <p>{event.host}</p>
-              {event.attendees.map((attendee: string, idx: number) => {
-                // Has to be 1 as host is always an attendee
-                if (event.attendees.length === 1) {
-                  return <p key={idx}>No attendees yet</p>
-                }
-                if (attendee !== event.host) {
-                  return <p key={idx}>{attendee}</p>
-                }
-              })}
+              <EventCardDetails event={event} />
               <Button onClick={async () => {
                 const joined = event.attendees.includes(user?.[`${claimUrl}/username`]);
                 await joinOrLeaveEvent(token, event.id, joined, user);

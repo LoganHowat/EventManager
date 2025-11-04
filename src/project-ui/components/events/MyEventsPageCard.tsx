@@ -1,5 +1,5 @@
 import { Panel, Button } from 'rsuite';
-import { deleteEvent } from "../../";
+import { deleteEvent, EventCardDetails } from "../../";
 
 
 interface props {
@@ -20,25 +20,7 @@ function EventsPageCard(props: props) {
           <Panel
             bordered
           >
-            <h2>{event.title}</h2>
-            <h5>Description</h5>
-            <p>{event.description}</p>
-            <h5>Created By:</h5>
-            <p>{event.host}</p>
-            <h5>Date</h5>
-            <p>{event.date}</p>
-            <h5>Time</h5>
-            <p>{event.time}</p>
-            <h5>Attendees:</h5>
-            {event.attendees && event.attendees.map((attendee: string, idx: number) => {
-              // Has to be 1 as host is always an attendee
-              if (event.attendees.length === 1) {
-                return <p key={idx}>No attendees yet</p>
-              }
-              if (attendee !== event.host) {
-                return <p key={idx}>{attendee}</p>
-              }
-            })}
+            <EventCardDetails event={event} />
             <br />
             <Button onClick={() => {
               setEventDetails({
