@@ -1,5 +1,5 @@
 import { Panel, Button } from 'rsuite';
-import { joinOrLeaveEvent } from "../database/utils";
+import { joinOrLeaveEvent } from "../../";
 
 
 interface props {

@@ -1,11 +1,14 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "rsuite";
-import { getEvents } from "../database/utils";
 import { useEffect, useState, useContext } from "react";
-import { TokenContext } from "../database/TokenContext";
-import { AddEventModal, MyEventsPageCard } from "../components";
-import { EventDetails } from "../interfaces/Events";
+import {
+  TokenContext,
+  AddEventModal,
+  MyEventsPageCard,
+  EventDetails,
+  getEvents
+} from "..";
 
 
 function MyEventsPage() {

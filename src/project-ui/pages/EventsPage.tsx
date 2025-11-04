@@ -1,8 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState, useContext } from "react";
-import { getEvents } from "../database/utils";
-import { TokenContext } from "../database/TokenContext";
-import { EventsPageCard } from "../components";
+import { getEvents, TokenContext, EventsPageCard } from "../";
+
 
 function EventsPage() {
   const { user } = useAuth0();

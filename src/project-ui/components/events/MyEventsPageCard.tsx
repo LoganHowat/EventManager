@@ -1,5 +1,6 @@
 import { Panel, Button } from 'rsuite';
-import { deleteEvent } from "../database/utils";
+import { deleteEvent } from "../../";
+
 
 interface props {
   events: any[],
@@ -24,6 +25,10 @@ function EventsPageCard(props: props) {
             <p>{event.description}</p>
             <h5>Created By:</h5>
             <p>{event.host}</p>
+            <h5>Date</h5>
+            <p>{event.date}</p>
+            <h5>Time</h5>
+            <p>{event.time}</p>
             <h5>Attendees:</h5>
             {event.attendees && event.attendees.map((attendee: string, idx: number) => {
               // Has to be 1 as host is always an attendee

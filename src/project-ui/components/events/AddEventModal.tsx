@@ -1,7 +1,6 @@
 import { Button, Modal, Input, DatePicker, TimePicker } from 'rsuite';
 import { useState, useEffect } from "react";
-import { upsertEvent } from '../database/utils';
-import { EventDetails } from '../interfaces/Events';
+import { EventDetails, upsertEvent } from '../../';
 import { isBefore, format } from 'date-fns';
 
 
