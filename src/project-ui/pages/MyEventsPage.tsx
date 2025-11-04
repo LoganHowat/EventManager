@@ -1,6 +1,6 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "rsuite";
+import { Button, Dropdown } from "rsuite";
 import { useEffect, useState, useContext } from "react";
 import {
   TokenContext,
@@ -19,6 +19,7 @@ function MyEventsPage() {
   // This state is used to store the details of the event being edited
   const [eventDetails, setEventDetails] = useState<EventDetails | undefined>(undefined);
   const [openAddEventModal, setOpenAddEventModal] = useState<boolean>(false);
+  const [pastEvents, setPastEvents] = useState<boolean>(false);
 
   const token = useContext(TokenContext);
 
@@ -27,7 +28,7 @@ function MyEventsPage() {
       if (!token) return;
       setLoading(true);
       try {
-        const events = await getEvents(token, user, true);
+        const events = await getEvents(token, user, true, pastEvents);
         setEvents(events || []);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -36,7 +37,7 @@ function MyEventsPage() {
       setLoading(false);
     }
     getEventsData();
-  }, [token, user]);
+  }, [token, user, pastEvents]);
 
   if (loading || !token) {
     return (
@@ -47,6 +48,10 @@ function MyEventsPage() {
   } else {
     return (
       <div className='page-center'>
+        <Dropdown title={'Filter Events'}>
+          <Dropdown.Item onClick={() => setPastEvents(false)}>Show Upcoming Events</Dropdown.Item>
+          <Dropdown.Item onClick={() => setPastEvents(true)}>Show Past Events</Dropdown.Item>
+        </Dropdown>
         <AddEventModal
           open={openAddEventModal}
           onClose={() => setOpenAddEventModal(false)}

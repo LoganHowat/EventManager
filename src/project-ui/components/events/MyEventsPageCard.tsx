@@ -22,22 +22,28 @@ function EventsPageCard(props: props) {
           >
             <EventCardDetails event={event} />
             <br />
-            <Button onClick={() => {
-              setEventDetails({
-                id: event.id,
-                title: event.title,
-                description: event.description,
-                date: event.date,
-                time: event.time
-              })
-              setOpenAddEventModal(true)
-            }}>
-              Edit
-            </Button>
-            <Button onClick={async () => {
-              await deleteEvent(token, event.id);
-              setEvents(events.filter(e => e.id !== event.id));
-            }}>
+            {event.date <= new Date().toISOString().split('T')[0] ? null : (
+              <Button
+                onClick={() => {
+                  setEventDetails({
+                    id: event.id,
+                    title: event.title,
+                    description: event.description,
+                    date: event.date,
+                    time: event.time
+                  })
+                  setOpenAddEventModal(true)
+                }}
+              >
+                Edit
+              </Button>
+            )}
+            <Button
+              onClick={async () => {
+                await deleteEvent(token, event.id);
+                setEvents(events.filter(e => e.id !== event.id));
+              }}
+            >
               Delete
             </Button>
           </Panel>

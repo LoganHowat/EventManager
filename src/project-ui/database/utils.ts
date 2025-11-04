@@ -81,20 +81,24 @@ const addAtteneesToEvents = async (supabase: any, events: any[]) => {
   return eventsWithAttendees;
 }
 
-export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean = false) => {
+export const getEvents = async (token: any, user?: any, userOnlyEvents: boolean = false, past: boolean = false) => {
   const supabase = await setupSupabase(token);
+  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  
   // Fetch all events from the Events table
   if (userOnlyEvents) {
     var { data: events, error } = await supabase
       .from('Events')
       .select('*') // Specify columns to retrieve
-      .eq('host', user?.[`${claimUrl}/username`]); // Filter rows;
+      .eq('host', user?.[`${claimUrl}/username`]) // Filter rows
+      .filter('date', past ? 'lt' : 'gte', today); // Filter by date based on past parameter
 
   } else {
     var { data: events, error } = await supabase
       .from('Events')
       .select('*') // Specify columns to retrieve
       .not('host', 'eq', user?.[`${claimUrl}/username`]) // Filter rows
+      .filter('date', past ? 'lt' : 'gte', today) // Filter by date based on past parameter
       .order('created_at', { ascending: false }); // Order by created_at in descending order
   }
 

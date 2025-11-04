@@ -22,32 +22,34 @@ function EventsPageCard(props: props) {
               bordered
             >
               <EventCardDetails event={event} />
-              <Button onClick={async () => {
-                const joined = event.attendees.includes(user?.[`${claimUrl}/username`]);
-                await joinOrLeaveEvent(token, event.id, joined, user);
-                // Handles local state update for attendees without refetching
-                const eventsChanged = events.map(e => {
-                  if (e.id === event.id) {
-                    if (joined) {
-                      return {
-                        ...e,
-                        // Remove user from attendees array
-                        attendees: e.attendees.filter((a: string) => a !== user?.[`${claimUrl}/username`])
-                      };
-                    } else {
-                      return {
-                        ...e,
-                        // Add user to attendees array
-                        attendees: [...e.attendees, user?.[`${claimUrl}/username`]]
-                      };
+              {event.date < new Date().toISOString().split('T')[0] ? null : (
+                <Button onClick={async () => {
+                  const joined = event.attendees.includes(user?.[`${claimUrl}/username`]);
+                  await joinOrLeaveEvent(token, event.id, joined, user);
+                  // Handles local state update for attendees without refetching
+                  const eventsChanged = events.map(e => {
+                    if (e.id === event.id) {
+                      if (joined) {
+                        return {
+                          ...e,
+                          // Remove user from attendees array
+                          attendees: e.attendees.filter((a: string) => a !== user?.[`${claimUrl}/username`])
+                        };
+                      } else {
+                        return {
+                          ...e,
+                          // Add user to attendees array
+                          attendees: [...e.attendees, user?.[`${claimUrl}/username`]]
+                        };
+                      }
                     }
-                  }
-                })
-                setEvents(eventsChanged);
-              }}>
-                {event.attendees.includes(user?.[`${claimUrl}/username`]) ?
-                  'Leave Event' : 'Join Event'}
-              </Button>
+                  })
+                  setEvents(eventsChanged);
+                }}>
+                  {event.attendees.includes(user?.[`${claimUrl}/username`]) ?
+                    'Leave Event' : 'Join Event'}
+                </Button>
+              )}
             </Panel>
           </div>
         ))

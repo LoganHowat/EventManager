@@ -33,7 +33,7 @@ function EventCardDetails(props: props) {
       {event.attendees && event.attendees.map((attendee: string, idx: number) => {
         // Has to be 1 as host is always an attendee
         if (event.attendees.length === 1) {
-          return <p key={idx}>No attendees yet</p>
+          return <p key={idx}>No attendees</p>
         }
         if (attendee !== event.host) {
           return <p key={idx}>{attendee}</p>
