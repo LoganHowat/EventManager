@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState, useContext } from "react";
+import { Loader } from "rsuite";
 import { getEvents, TokenContext, EventsPageCard, PastEventsFilter } from "../";
 
 
@@ -30,7 +31,7 @@ function EventsPage() {
   if (loading || !token) {
     return (
       <div className='page-center'>
-        <p>Loading...</p>
+        <Loader size="lg" />
       </div>
     );
   } else {

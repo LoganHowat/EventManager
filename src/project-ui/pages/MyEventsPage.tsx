@@ -1,6 +1,6 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "rsuite";
+import { Button, Loader } from "rsuite";
 import { useEffect, useState, useContext } from "react";
 import {
   TokenContext,
@@ -42,7 +42,7 @@ function MyEventsPage() {
   if (loading || !token) {
     return (
       <div className='page-center'>
-        <p>Loading...</p>
+        <Loader size="lg" />
       </div>
     );
   } else {
