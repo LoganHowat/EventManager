@@ -70,10 +70,12 @@ function AddEventModal(props: props) {
             <h5>Title: <span style={{color: 'red'}}>*</span></h5>
             <Input value={title} onChange={(e) => setTitle(e)} />
           </div>
+          <br/>
           <div>
             <h5>Description: <span style={{color: 'red'}}>*</span></h5>
             <Input as='textarea' value={description} onChange={(e) => setDescription(e)} />
           </div>
+          <br/>
           <div>
             <h5>Date: <span style={{color: 'red'}}>*</span></h5>
             <DatePicker
@@ -87,6 +89,7 @@ function AddEventModal(props: props) {
               }}
             />
           </div>
+          <br/>
           <div>
             <h5>Time: <span style={{color: 'red'}}>*</span></h5>
             <TimePicker

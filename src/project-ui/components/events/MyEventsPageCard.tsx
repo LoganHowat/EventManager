@@ -24,6 +24,7 @@ function EventsPageCard(props: props) {
             <br />
             {event.date <= new Date().toISOString().split('T')[0] ? null : (
               <Button
+                style={{marginRight: '15px'}}
                 onClick={() => {
                   setEventDetails({
                     id: event.id,
