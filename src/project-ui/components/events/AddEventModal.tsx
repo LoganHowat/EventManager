@@ -9,12 +9,13 @@ interface props {
   onClose: any,
   token: string,
   setEvents: (event: any) => void,
+  pastEvents: boolean,
   user?: any
   eventDetails?: EventDetails
 }
 
 function AddEventModal(props: props) {
-  const { open, onClose, token, user, eventDetails, setEvents } = props;
+  const { open, onClose, token, user, eventDetails, setEvents, pastEvents } = props;
   const [title, setTitle] = useState<string>(eventDetails?.title || '');
   const [description, setDescription] = useState<string>(eventDetails?.description || '');
   const [date, setDate] = useState<string>('');
@@ -51,8 +52,8 @@ function AddEventModal(props: props) {
           event.id === eventDetails.id ? { ...event, ...updatedEvent } : event
         )
       );
-    } else {
-      // Optionally, you can handle adding the new event to the local state here if needed
+      // As users can only add new upcoming events, we only need to update the local state when editing an event
+    } else if (!pastEvents) {
       setEvents((prevEvents: any) => [...(prevEvents || []), newEvent]);
     }
     onClose();
@@ -66,15 +67,15 @@ function AddEventModal(props: props) {
       <Modal.Body>
         <form>
           <div>
-            <h5>Title:</h5>
+            <h5>Title: <span style={{color: 'red'}}>*</span></h5>
             <Input value={title} onChange={(e) => setTitle(e)} />
           </div>
           <div>
-            <h5>Description:</h5>
+            <h5>Description: <span style={{color: 'red'}}>*</span></h5>
             <Input as='textarea' value={description} onChange={(e) => setDescription(e)} />
           </div>
           <div>
-            <h5>Date:</h5>
+            <h5>Date: <span style={{color: 'red'}}>*</span></h5>
             <DatePicker
               format="dd MMM yyyy"
               placeholder="Select Date"
@@ -87,7 +88,7 @@ function AddEventModal(props: props) {
             />
           </div>
           <div>
-            <h5>Time:</h5>
+            <h5>Time: <span style={{color: 'red'}}>*</span></h5>
             <TimePicker
               placeholder="Select Time"
               block

@@ -59,6 +59,7 @@ function MyEventsPage() {
           user={user}
           eventDetails={eventDetails}
           setEvents={setEvents}
+          pastEvents={pastEvents}
         />
         <MyEventsPageCard
           events={events}
