@@ -11,7 +11,7 @@ function LogoutButton() {
   };
 
   return (
-  <Button onClick={handleLogout}>
+  <Button onClick={handleLogout} style={{backgroundColor: '#f55656ff'}}>
     <span>
     <h6>Log Out <Exit/> </h6>
     </span>

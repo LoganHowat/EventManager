@@ -1,0 +1,16 @@
+@import 'variables';
+
+/* Change dropdown menu background */
+.rs-dropdown-menu {
+  background-color: $secondary !important;
+}
+
+/* Change dropdown menu background */
+.rs-dropdown-toggle.rs-btn.rs-btn-default {
+  background-color: $secondary !important;
+}
+
+/* Optional: change item hover color */
+.rs-dropdown-item:hover {
+  background-color: $secondary !important;
+}

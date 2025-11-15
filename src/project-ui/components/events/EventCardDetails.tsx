@@ -20,7 +20,7 @@ function EventCardDetails(props: props) {
 
   return (
     <>
-      <h2>{event.title}</h2>
+      <h3>{event.title}</h3>
       <br/>
       <h5>Description</h5>
       <p>{event.description}</p>

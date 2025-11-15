@@ -1,7 +1,15 @@
+@import 'variables';
+
 .event-card {
   margin-bottom: 20px;
   width: 90%;
   text-align: center;
+  background-color: $secondary;
+  border-radius: 10px;
+}
+
+.rs-modal-content {
+  background-color: $secondary !important;
 }
 
 @media (min-width: 650px) {

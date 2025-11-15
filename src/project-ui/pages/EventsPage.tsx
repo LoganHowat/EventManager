@@ -38,9 +38,9 @@ function EventsPage() {
     return (
       <div className='page-center'>
         <div className="my-events-buttons">
-          <PastEventsFilter setPastEvents={setPastEvents} />
+          <PastEventsFilter setPastEvents={setPastEvents}/>
         </div>
-        <h4 className="events-page-header">{pastEvents ? 'Past Events:' : 'Upcoming Events:'}</h4>
+        <h3 className="events-page-header">{pastEvents ? 'Past Events:' : 'Upcoming Events:'}</h3>
         {events.length === 0 ? (
           <p>{pastEvents ? 'There are no past events.' : 'There are no upcoming events.'}</p>
         ) :

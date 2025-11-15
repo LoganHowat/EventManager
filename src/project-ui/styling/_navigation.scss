@@ -1,3 +1,5 @@
+@import 'variables';
+
 .sidenav-container {
   display: flex;
   margin-bottom: 20px
@@ -6,6 +8,7 @@
 .sidenav-menu-button {
   margin-left: 10px;
   margin-top: 10px;
+  background-color: $secondary !important;
 }
 
 .sidenav-closed {
@@ -19,7 +22,7 @@
 .sidenav-open {
   @extend .sidenav-closed;
   width: 100%;
-  background-color: grey;
+  background-color: $secondary;
   padding-top: 10px;
   z-index: 6;
 
@@ -34,4 +37,5 @@
 
 .sidenav-logout {
   text-align: center;
+  background-color: '#f55656ff' !important;
 }

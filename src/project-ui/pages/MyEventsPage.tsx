@@ -49,22 +49,24 @@ function MyEventsPage() {
     return (
       <div className='page-center'>
         <div className="my-events-buttons">
-          <Button onClick={() => {
-            setEventDetails({
-              id: undefined,
-              title: '',
-              description: '',
-              date: '',
-              time: ''
-            })
-            setOpenAddEventModal(true)
-          }}
+          <Button
+            style={{ backgroundColor: '#5ad15eff' }}
+            onClick={() => {
+              setEventDetails({
+                id: undefined,
+                title: '',
+                description: '',
+                date: '',
+                time: ''
+              })
+              setOpenAddEventModal(true)
+            }}
           >
             Create Event
           </Button>
-          <PastEventsFilter setPastEvents={setPastEvents} />
+          <PastEventsFilter setPastEvents={setPastEvents} bottomEnd={true}/>
         </div>
-        <h4 className="events-page-header">{pastEvents ? 'Past Events:' : 'Upcoming Events:'}</h4>
+        <h3 className="events-page-header">{pastEvents ? 'Past Events:' : 'Upcoming Events:'}</h3>
         <AddEventModal
           open={openAddEventModal}
           onClose={() => setOpenAddEventModal(false)}

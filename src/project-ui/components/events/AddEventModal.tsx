@@ -60,24 +60,24 @@ function AddEventModal(props: props) {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} className='add-event-modal'>
       <Modal.Header>
         <h3>Add Event</h3>
       </Modal.Header>
       <Modal.Body>
         <form>
           <div>
-            <h5>Title: <span style={{color: 'red'}}>*</span></h5>
+            <h5>Title: <span style={{ color: 'red' }}>*</span></h5>
             <Input value={title} onChange={(e) => setTitle(e)} />
           </div>
-          <br/>
+          <br />
           <div>
-            <h5>Description: <span style={{color: 'red'}}>*</span></h5>
+            <h5>Description: <span style={{ color: 'red' }}>*</span></h5>
             <Input as='textarea' value={description} onChange={(e) => setDescription(e)} />
           </div>
-          <br/>
+          <br />
           <div>
-            <h5>Date: <span style={{color: 'red'}}>*</span></h5>
+            <h5>Date: <span style={{ color: 'red' }}>*</span></h5>
             <DatePicker
               format="dd MMM yyyy"
               placeholder="Select Date"
@@ -89,9 +89,9 @@ function AddEventModal(props: props) {
               }}
             />
           </div>
-          <br/>
+          <br />
           <div>
-            <h5>Time: <span style={{color: 'red'}}>*</span></h5>
+            <h5>Time: <span style={{ color: 'red' }}>*</span></h5>
             <TimePicker
               placeholder="Select Time"
               block
@@ -106,12 +106,13 @@ function AddEventModal(props: props) {
       </Modal.Body>
       <Modal.Footer>
         <Button
+          style={{ backgroundColor: '#5ad15eff' }}
           onClick={handleSubmit}
           disabled={!title || !description || !date || !time}
         >
           Submit
         </Button>
-        <Button onClick={onClose} title='Cancel' >Cancel</Button>
+        <Button onClick={onClose} title='Cancel' style={{ backgroundColor: '#ebc034ff' }} >Cancel</Button>
       </Modal.Footer>
     </Modal>
   );

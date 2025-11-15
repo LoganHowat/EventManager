@@ -24,7 +24,7 @@ function EventsPageCard(props: props) {
             <br />
             {event.date <= new Date().toISOString().split('T')[0] ? null : (
               <Button
-                style={{marginRight: '15px'}}
+                style={{ marginRight: '15px', backgroundColor: '#ebc034ff' }}
                 onClick={() => {
                   setEventDetails({
                     id: event.id,
@@ -40,6 +40,7 @@ function EventsPageCard(props: props) {
               </Button>
             )}
             <Button
+              style={{ backgroundColor: '#f55656ff' }}
               onClick={async () => {
                 await deleteEvent(token, event.id);
                 setEvents(events.filter(e => e.id !== event.id));
