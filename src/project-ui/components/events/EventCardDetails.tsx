@@ -21,14 +21,19 @@ function EventCardDetails(props: props) {
   return (
     <>
       <h2>{event.title}</h2>
+      <br/>
       <h5>Description</h5>
       <p>{event.description}</p>
+      <br/>
       <h5>Created By:</h5>
       <p>{event.host}</p>
+      <br/>
       <h5>Date</h5>
       <p>{formatDate(event.date)}</p>
+      <br/>
       <h5>Time</h5>
       <p>{formatTime(event.time)}</p>
+      <br/>
       <h5>Attendees:</h5>
       {event.attendees && event.attendees.map((attendee: string, idx: number) => {
         // Has to be 1 as host is always an attendee

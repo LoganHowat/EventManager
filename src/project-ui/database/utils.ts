@@ -2,7 +2,6 @@ import { createClient } from '@supabase/supabase-js';
 const claimUrl = import.meta.env.VITE_AUTH0_CLAIM_URL;
 
 const setupSupabase = async (token: any) => {
-  ;
 
   const supabase = createClient(
     import.meta.env.VITE_SUPABASE_URL,
