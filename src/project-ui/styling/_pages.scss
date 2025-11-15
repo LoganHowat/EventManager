@@ -5,6 +5,11 @@
   height: 90vh;
 }
 
+.login-page-center {
+  @extend .page-center;
+  justify-content: center;
+}
+
 .my-events-buttons {
   display: flex;
   width: 90%;

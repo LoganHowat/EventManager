@@ -3,8 +3,9 @@ import { LoginButton } from '..'
 
 function LoginPage() {
   return (
-    <div className='page-center'>
-      <h1>Login</h1>
+    <div className='login-page-center'>
+      <h2>Event Manager</h2>
+      <br/>
       <LoginButton />
     </div>
   )
