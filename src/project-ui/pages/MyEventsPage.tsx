@@ -1,18 +1,18 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button, Dropdown } from "rsuite";
+import { Button } from "rsuite";
 import { useEffect, useState, useContext } from "react";
 import {
   TokenContext,
   AddEventModal,
   MyEventsPageCard,
   EventDetails,
-  getEvents
+  getEvents,
+  PastEventsFilter
 } from "..";
 
 
 function MyEventsPage() {
-
   const { user } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<any[]>([]);
@@ -48,10 +48,23 @@ function MyEventsPage() {
   } else {
     return (
       <div className='page-center'>
-        <Dropdown title={'Filter Events'}>
-          <Dropdown.Item onClick={() => setPastEvents(false)}>Show Upcoming Events</Dropdown.Item>
-          <Dropdown.Item onClick={() => setPastEvents(true)}>Show Past Events</Dropdown.Item>
-        </Dropdown>
+        <div className="my-events-buttons">
+          <Button onClick={() => {
+            setEventDetails({
+              id: undefined,
+              title: '',
+              description: '',
+              date: '',
+              time: ''
+            })
+            setOpenAddEventModal(true)
+          }}
+          >
+            Create Event
+          </Button>
+          <PastEventsFilter setPastEvents={setPastEvents} />
+        </div>
+        <h4 className="events-page-header">{pastEvents ? 'Past Events:' : 'Upcoming Events:'}</h4>
         <AddEventModal
           open={openAddEventModal}
           onClose={() => setOpenAddEventModal(false)}
@@ -61,25 +74,17 @@ function MyEventsPage() {
           setEvents={setEvents}
           pastEvents={pastEvents}
         />
-        <MyEventsPageCard
-          events={events}
-          token={token}
-          setEvents={setEvents}
-          setOpenAddEventModal={setOpenAddEventModal}
-          setEventDetails={setEventDetails}
-        />
-        <Button onClick={() => {
-          setEventDetails({
-            id: undefined,
-            title: '',
-            description: '',
-            date: '',
-            time: ''
-          })
-          setOpenAddEventModal(true)
-        }}>
-          Create Event
-        </Button>
+        {events.length === 0 ? (
+          <p>{pastEvents ? 'You have no past events.' : 'You have no upcoming events.'}</p>
+        ) :
+          <MyEventsPageCard
+            events={events}
+            token={token}
+            setEvents={setEvents}
+            setOpenAddEventModal={setOpenAddEventModal}
+            setEventDetails={setEventDetails}
+          />
+        }
       </div>
     );
   }

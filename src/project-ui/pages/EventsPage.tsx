@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Dropdown } from "rsuite";
 import { useEffect, useState, useContext } from "react";
-import { getEvents, TokenContext, EventsPageCard } from "../";
+import { getEvents, TokenContext, EventsPageCard, PastEventsFilter } from "../";
 
 
 function EventsPage() {
@@ -37,16 +36,20 @@ function EventsPage() {
   } else {
     return (
       <div className='page-center'>
-        <Dropdown title={'Filter Events'}>
-          <Dropdown.Item onClick={() => setPastEvents(false)}>Show Upcoming Events</Dropdown.Item>
-          <Dropdown.Item onClick={() => setPastEvents(true)}>Show Past Events</Dropdown.Item>
-        </Dropdown>
-        <EventsPageCard
-          events={events}
-          user={user}
-          token={token}
-          setEvents={setEvents}
-        />
+        <div className="my-events-buttons">
+          <PastEventsFilter setPastEvents={setPastEvents} />
+        </div>
+        <h4 className="events-page-header">{pastEvents ? 'Past Events:' : 'Upcoming Events:'}</h4>
+        {events.length === 0 ? (
+          <p>{pastEvents ? 'There are no past events.' : 'There are no upcoming events.'}</p>
+        ) :
+          <EventsPageCard
+            events={events}
+            user={user}
+            token={token}
+            setEvents={setEvents}
+          />
+        }
       </div>
     );
   }

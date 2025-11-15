@@ -1,7 +1,28 @@
 .page-center {
   display: flex;
-  align-items: center; 
-  justify-content: center;
+  align-items: center;
   flex-direction: column;
   height: 90vh;
+}
+
+.my-events-buttons {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .past-filter-dropdown {
+    align-self: flex-end;
+    z-index: -1;
+  }
+}
+
+.events-page-header {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 650px) {
+  .my-events-buttons {
+    width: 60%;
+  }
 }

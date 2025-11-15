@@ -1,0 +1,11 @@
+.event-card {
+  margin-bottom: 20px;
+  width: 90%;
+  text-align: center;
+}
+
+@media (min-width: 650px) {
+  .event-card {
+    width: 60%;
+  }
+}

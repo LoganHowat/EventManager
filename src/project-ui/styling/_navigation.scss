@@ -1,27 +1,31 @@
 .sidenav-container {
   display: flex;
-  margin: 5%;
+  margin-bottom: 20px
+}
 
+.sidenav-menu-button {
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .sidenav-closed {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    overflow-x: hidden;
-    transition: 0.2s;
-  }
-  
+  height: 100%;
+  width: 0;
+  position: fixed;
+  overflow-x: hidden;
+  transition: 0.2s;
+}
+
 .sidenav-open {
   @extend .sidenav-closed;
   width: 100%;
   background-color: grey;
-  padding-top: 5%;
-}
+  padding-top: 10px;
+  z-index: 6;
 
-.sidenav-close-button {
-  padding-left: 5%;
+  .sidenav-menu-button {
+    margin-top: 0%;
+  }
 }
 
 .sidenav-links {

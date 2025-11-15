@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 
 interface Props {
-  pages: Pages[];  
+  pages: Pages[];
 }
 
 function Navigation(props: Props) {
@@ -15,36 +15,39 @@ function Navigation(props: Props) {
 
   return (
     <div className='sidenav-container'>
-      <Button 
+      <Button
+        className='sidenav-menu-button'
         onClick={() => setExpanded(!expanded)}
       >
-        <Menu/>
+        <Menu />
       </Button>
-        <div className={expanded ? 'sidenav-open' : 'sidenav-closed'}>
-      <Sidenav
-        appearance='subtle'
-      >
-      <Sidenav.Body>
-        <div className='sidenav-close-button'>
-          <Button onClick={() => setExpanded(!expanded)}>
-            <Menu/>
-          </Button>
-        </div>
-        <div className='sidenav-links'>
-          <Nav vertical>
-            {pages.map((page) => {
-              return (
-              <Nav.Item as={Link} to={page.path} key={page.name} onClick={() => setExpanded(!expanded)}>
-                <h3>{page.name}</h3>
-              </Nav.Item>)
-            })}
-          </Nav>
-        </div>
-        <div className='sidenav-logout'>
-          <LogoutButton/>
-        </div>
-      </Sidenav.Body>
-      </Sidenav>
+      <div className={expanded ? 'sidenav-open' : 'sidenav-closed'}>
+        <Sidenav
+          appearance='subtle'
+        >
+          <Sidenav.Body>
+            <div className='sidenav-close-button'>
+              <Button 
+                className='sidenav-menu-button'
+                onClick={() => setExpanded(!expanded)}>
+                <Menu />
+              </Button>
+            </div>
+            <div className='sidenav-links'>
+              <Nav vertical>
+                {pages.map((page) => {
+                  return (
+                    <Nav.Item as={Link} to={page.path} key={page.name} onClick={() => setExpanded(!expanded)}>
+                      <h3>{page.name}</h3>
+                    </Nav.Item>)
+                })}
+              </Nav>
+            </div>
+            <div className='sidenav-logout'>
+              <LogoutButton />
+            </div>
+          </Sidenav.Body>
+        </Sidenav>
       </div>
     </div>
   );
