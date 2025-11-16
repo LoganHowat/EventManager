@@ -26,7 +26,7 @@ export default function App() {
 
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/EventManager">
     {location.pathname != '/' && <Navigation pages={pages}/>}
       <Routes>
         {/* Pages only acessible if not logged in */}
