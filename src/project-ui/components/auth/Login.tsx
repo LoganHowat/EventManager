@@ -8,7 +8,7 @@ function LoginButton() {
     <Button
       onClick={() =>
           loginWithRedirect({
-              appState: { returnTo: "/home" },
+              appState: { returnTo: "EventManager/home" },
           })
       }
     >
