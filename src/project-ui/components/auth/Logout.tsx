@@ -7,7 +7,7 @@ function LogoutButton() {
   const { logout } = useAuth0();
 
   const handleLogout = () => {
-    logout({ returnTo: window.location.origin });
+    logout({ returnTo: window.location.origin + '/EventManager/' });
   };
 
   return (

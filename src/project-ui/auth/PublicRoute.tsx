@@ -1,4 +1,4 @@
-import { Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import { Loader } from "rsuite";
@@ -8,7 +8,11 @@ const PublicRoute = () => {
 
   // Wait for authentication state to resolve
   if (isLoading) {
-      return <Loader size="lg" />;
+    return (
+      <div className='page-center'>
+        <Loader size="lg" />
+      </div>
+    )
   }
 
   // Redirect to /home if the user is authenticated
