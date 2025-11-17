@@ -13,7 +13,7 @@ export default function App() {
 
   const pages = [
     {
-      name: "Home",
+      name: "Other Events",
       path: "/home",
       element: <EventsPage/>
     },
