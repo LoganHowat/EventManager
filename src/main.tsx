@@ -57,7 +57,7 @@ createRoot(document.getElementById('root')!).render(
     <Auth0Provider
       domain="dev-sf5nk6apumodlmgm.us.auth0.com"
       clientId="XbmgHfg0Fopy7SRqgd8ALI7AQFOfvItZ"
-      redirectUri={window.location.origin + "/home"}
+      redirectUri={window.location.origin + "/EventManager/home"}
       cacheLocation="localstorage"
     >
       <App />
