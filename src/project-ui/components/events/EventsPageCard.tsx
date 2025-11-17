@@ -22,6 +22,7 @@ function EventsPageCard(props: props) {
               bordered
             >
               <EventCardDetails event={event} />
+              <br/>
               {event.date < new Date().toISOString().split('T')[0] ? null : (
                 <Button onClick={async () => {
                   const joined = event.attendees.includes(user?.[`${claimUrl}/username`]);
